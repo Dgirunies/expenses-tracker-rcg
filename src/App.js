@@ -26,7 +26,7 @@ function App() {
   return (
     <div>
       <h2>Let's get started!</h2>
-      <Expenses item={expenses} />
+      <Expenses items={expenses} />
     </div>
   );
 }
