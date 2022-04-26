@@ -1,6 +1,11 @@
+import { useEffect, useRef, useState } from "react";
 import ExpenseItem from "./components/ExpenseItem";
 
 function App() {
+  const updateCount = useRef(0);
+  const [enabled, setEnabled] = useState(true);
+
+  console.log(updateCount.current);
   const expenses = [
     {
       id: "e1",
@@ -23,24 +28,33 @@ function App() {
     },
   ];
 
+  useEffect(() => {
+    updateCount.current += 1;
+  }, [enabled]);
+  useEffect(() => {
+    updateCount.current += 1;
+  }, [updateCount.current]);
+
   return (
     <div>
-      <h2>Let's get started!</h2>
+      <h2 onClick={() => setEnabled((current) => !current)}>
+        Let's get started!
+      </h2>
       <ExpenseItem
         title={expenses[0].title}
         amount={expenses[0].amount}
         date={expenses[0].date}
-      ></ExpenseItem>
+      />
       <ExpenseItem
         title={expenses[1].title}
         amount={expenses[1].amount}
         date={expenses[1].date}
-      ></ExpenseItem>
+      />
       <ExpenseItem
         title={expenses[2].title}
         amount={expenses[2].amount}
         date={expenses[2].date}
-      ></ExpenseItem>
+      />
     </div>
   );
 }
