@@ -5,7 +5,7 @@ import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
-  const [displayForm, setDisplayForm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const saveExpenseDataHandler = (enteredExpenseData) => {
     const expenseData = {
@@ -13,22 +13,27 @@ const NewExpense = (props) => {
       id: Math.random().toString(),
     };
     props.onAddExpense(expenseData);
+    setIsEditing(false);
   };
 
-  const displayFormStateHandler = () => {
-    setDisplayForm((prevState) => !prevState);
+  const startEditingHandler = () => {
+    setIsEditing(true);
+  };
+
+  const stopEditingHandler = () => {
+    setIsEditing(false);
   };
 
   return (
     <div className="new-expense">
-      {!displayForm && (
-        <button onClick={displayFormStateHandler}>Add New Expense</button>
+      {!isEditing && (
+        <button onClick={startEditingHandler}>Add New Expense</button>
       )}
 
-      {displayForm && (
+      {isEditing && (
         <ExpenseForm
           onSaveExpenseData={saveExpenseDataHandler}
-          onCancel={displayFormStateHandler}
+          onCancel={stopEditingHandler}
         />
       )}
     </div>
